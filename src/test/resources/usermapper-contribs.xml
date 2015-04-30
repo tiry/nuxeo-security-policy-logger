@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.usermapper.testContribs">
+
+  <extension target="org.nuxeo.usermapper.service.UserMapperComponent"
+    point="mapper">
+
+    <mapper name="javaDummy" class="org.nuxeo.usermapper.test.dummy.DummyUserMapper">
+    </mapper>
+
+    <mapper name="groovyDummy">
+      <script>
+          attributes.put("username", userObject.login);
+          attributes.put("firstName", userObject.name.firstName);
+          attributes.put("lastName", userObject.name.lastName);
+      </script>
+    </mapper>
+
+  </extension>
+
+</component>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.core.security.logging">
+
+  <extension target="org.nuxeo.ecm.core.security.SecurityService"
+    point="policies">
+    <policy name="logging"
+      class="org.nuxeo.security.logger.LogingSecurityPolicy" order="1" />
+  </extension>
+
+</component>
