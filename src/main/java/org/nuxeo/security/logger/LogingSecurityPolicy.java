@@ -66,9 +66,6 @@ public class LogingSecurityPolicy extends AbstractSecurityPolicy implements Secu
 
         log.info("Permission check :" + sb.toString());
 
-        System.out.println("**** Permission check :" + sb.toString());
-
-
         return Access.UNKNOWN;
     }
 
