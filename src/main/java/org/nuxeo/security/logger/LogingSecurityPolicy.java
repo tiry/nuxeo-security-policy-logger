@@ -4,12 +4,16 @@ import java.security.Principal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.ecm.core.api.security.ACE;
+import org.nuxeo.ecm.core.api.security.ACL;
 import org.nuxeo.ecm.core.api.security.ACP;
 import org.nuxeo.ecm.core.api.security.Access;
 import org.nuxeo.ecm.core.model.Document;
 import org.nuxeo.ecm.core.query.sql.model.SQLQuery.Transformer;
 import org.nuxeo.ecm.core.security.AbstractSecurityPolicy;
 import org.nuxeo.ecm.core.security.SecurityPolicy;
+
+
 
 public class LogingSecurityPolicy extends AbstractSecurityPolicy implements SecurityPolicy {
 
@@ -44,17 +48,19 @@ public class LogingSecurityPolicy extends AbstractSecurityPolicy implements Secu
         }
         sb.append(";checked permissions= ");
         sb.append(permission);
+
         sb.append(";principal= ");
         sb.append(principal.getName());
 
-        sb.append("\n");
+        sb.append("\n  mergedACL= ");
+        sb.append(dumpACP(mergedAcp));
+
         sb.append("  resolvedPermissions= [");
         for (String p : resolvedPermissions) {
             sb.append(p);
             sb.append(",");
         }
         sb.append("]");
-
 
         sb.append("\n");
         sb.append("  groups= [");
@@ -69,4 +75,17 @@ public class LogingSecurityPolicy extends AbstractSecurityPolicy implements Secu
         return Access.UNKNOWN;
     }
 
+    protected String dumpACP(ACP acp){
+        StringBuffer sb = new StringBuffer();
+        for (ACL acl : acp.getACLs()) {
+            sb.append(acl.getName());
+            sb.append(" : (");
+            for (ACE ace : acl.getACEs()) {
+                sb.append(ace.toString());
+                sb.append(";");
+            }
+            sb.append(")\n");
+        }
+        return sb.toString();
+    }
 }
